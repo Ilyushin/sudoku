@@ -9,10 +9,6 @@ heur_row = {}
 heur_column = {}
 heur_matrix = {}
 
-#C:\Users\Evgenii\Desktop\input_csv.csv
-
-#csv_path = ''
-
 class Node():
     def __init__(self, data, row_indx):
         self.data = data        
@@ -73,15 +69,6 @@ def save_data(path_file):
                 newStr.append(str(data_csv[i][j].data) if len(newStr) == 0 else (','+str(data_csv[i][j].data)))
                 
             csv_writer.writerow(newStr)
-
-def get_matrix():
-    
-    matr_index = 0
-    for i in range(9):
-        for j in range(9):
-            if ((i+1)%3 == 0) and ((j+1)%3 == 0):                
-                get_nodeFromRange(matr_index, i ,j)
-                matr_index +=1               
             
 def get_nodeFromRange(matr_index, i, j):
     
@@ -214,16 +201,9 @@ def find_resolving():
     else:
         return                     
 
-def resolving():
-    
-#     if len(csv_path) == 0: 
-#         return 'Path for a csv file is empty!'
-    
-    #get_data()
-    
+def resolving(): 
+
     set_columns()
-    
-#     get_matrix()
     
     set_heuris()    
     
