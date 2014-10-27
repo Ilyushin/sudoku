@@ -27,8 +27,7 @@ def separate_row(row, index_row):
             # create new node
             n = nodes.Node(sym, index_row)
             y += 1
-            arr_nodes.append(n)
-            # data_csv_vektor.append(n)
+            arr_nodes.append(n)            
             if not sym == 0: heuris_row += 1 
         except:
             return False
@@ -105,8 +104,7 @@ def resolving():
 
 def start_search(reverse):
     for item in not_poss:        
-        random.shuffle(item.pos_variants)
-        #item.pos_variants.sort(reverse=reverse)
+        random.shuffle(item.pos_variants)        
         for x in item.pos_variants:
             way = new_way(x, item)
             result = way.find_resolving(reverse)

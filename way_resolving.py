@@ -70,7 +70,7 @@ class new_way():
         col = 0    
         for item in self.not_poss:
             random.shuffle(item.pos_variants)
-            #item.pos_variants.sort(reverse=reverse)                    
+                                
             for x in item.pos_variants:
                 if is_possible(x, item, self.hash_row, self.hash_column, self.hash_matrix):
                     item.data = x                
