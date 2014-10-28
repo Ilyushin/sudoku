@@ -64,6 +64,8 @@ def save_data(path_file, solution):
                 
             csv_writer.writerow(newStr)
 
+#setting number of column for each cell, creating matrices 3*3 and 
+#calculating heuristic value for colums and matrices  
 def set_columns():    
     
     matr_index = 0
@@ -86,6 +88,7 @@ def set_columns():
         hash_column[i] = arr_column
         heur_column[i] = heuris_col   
 
+#calculating heuristic value for each cell
 def set_heuris():
     for i in range(9):
         for j in range(9):

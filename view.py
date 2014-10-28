@@ -15,10 +15,10 @@ def download_data():
     csv_path = tbPath.get()
     
     clear_solution = Label(root, textvariable='')
-    clear_solution.place(x=340,y=70,width=200, height = 200)
+    clear_solution.place(x=420,y=80,width=300, height = 290)
     
     clear_button = Label(root, textvariable='')
-    clear_button.place(x=245,y=190, width = 80, height = 100)
+    clear_button.place(x=330,y=200, width = 80, height = 100)
         
     if len(csv_path) == 0: 
         tkMessageBox.showinfo('Error.','Path for a csv file is empty!')
@@ -28,11 +28,11 @@ def download_data():
     
     if result and len(main.data_csv) != 0:
         
-        draw_board(50, 70, main.data_csv)
+        draw_board(50, 80, main.data_csv)
     
         #add button for starting resolving
         btResolve = Button(root, text ='Resolve', command = start_resolving, height=1, width=80)
-        btResolve.place(x=245,y=150, width = 80) 
+        btResolve.place(x=330,y=160, width = 80) 
     else:
         tkMessageBox.showinfo('Error.','Could not load data.')       
 
@@ -49,10 +49,10 @@ def start_resolving():
     msecs = (end - start) * 1000
     timer_data.set('time: '+ str(msecs) + ' ms')
     if len(main.solut) > 0:
-        draw_board(340, 70, main.solut)
+        draw_board(420, 80, main.solut)
         #add button for save result
         btSave = Button(root, text ='Save', command = save_data, height=1, width=80);
-        btSave.place(x=245,y=190, width = 80)       
+        btSave.place(x=330,y=200, width = 80)       
 
 def draw_board(x_start, y_start, data_csv):
     x = x_start
@@ -69,15 +69,15 @@ def draw_board(x_start, y_start, data_csv):
                 var.set(str(n.data))           
             
             cell.pack(side=LEFT)
-            cell.place(x = x,y = y, width = 20)
-            x += 20
-        y += 20
+            cell.place(x = x,y = y, width = 30, height = 30)
+            x += 30
+        y += 30
                              
 
 root = Tk()
 
 #set size of main window
-root.geometry("600x600")
+root.geometry("730x600")
 root.title('Sudoku')
 
 #add label for path
@@ -106,7 +106,7 @@ btDownload.place(x=465,y=28, width = 80)
 timer_data = StringVar()
 lbTimer = Label(root, textvariable=timer_data)
 lbTimer.pack(side=LEFT)
-lbTimer.place(x=190,y=300,width=200)
+lbTimer.place(x=260,y=360,width=200)
 
 root.mainloop()
 

@@ -2,6 +2,7 @@ import main, random
 from nodes import Node
 
 class new_way():
+#creating a new way and copying data from the main module
     def __init__(self, value, node):
         data_csv = []
         hash_row = {}
@@ -80,8 +81,9 @@ class new_way():
         for item in self.not_poss:
             if item.data == 0: return False        
         
-        return True       
+        return True      
     
+#calculating heuristic value for each cell
     def set_heuris(self):
         for i in range(9):
             for j in range(9):
@@ -90,6 +92,8 @@ class new_way():
                     fill_poss_variants(n, self.hash_row, self.hash_column, self.hash_matrix)
                 n.heuris = self.heur_row[n.index_row] + self.heur_column[n.index_col] + self.heur_matrix[n.index_matr]-len(n.pos_variants)  
 
+#creating matrices 3*3, creating hash table for matrices   
+#calculating heuristic value for matrices
 def get_nodeFromRange(matr_index, i, j, source, ha_matrix, he_matrix):
     
     arr = []
@@ -133,6 +137,7 @@ def get_nodeFromRange(matr_index, i, j, source, ha_matrix, he_matrix):
     ha_matrix[matr_index] = arr 
     he_matrix[matr_index] = heuris_matr
 
+#filling possible variants for each cell 
 def fill_poss_variants(n, h_row, h_col, h_matr):
     n.pos_variants = []
     for x in range(1, 10):
@@ -140,6 +145,7 @@ def fill_poss_variants(n, h_row, h_col, h_matr):
         if poss:
             n.pos_variants.append(x)
 
+#adding new value into depending (a row, a column, a matrix) 
 def change_dependents(node, x, ha_row, he_row, ha_col, he_col, ha_matr, he_matr):
     
     ha_row[node.index_row][node.index_col] = x
@@ -175,6 +181,7 @@ def check_obj_in_arr(i, arr):
     result = [a for a in arr if a.data == i]
     return False if len(result) == 0 else True
 
+#checking, we can use this value for this cell
 def is_possible(x, n, h_row, h_col, h_matr):
     
     colArr = h_col[n.index_col]
