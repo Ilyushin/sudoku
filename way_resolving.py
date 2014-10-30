@@ -65,23 +65,20 @@ class new_way():
         self.not_poss = not_poss
      
     def find_resolving(self, reverse):
-    
-        self.not_poss.sort(cmp=None, key=lambda Node: Node.heuris, reverse=True)    
-    
+        self.not_poss.sort(cmp=None, key=lambda Node: Node.heuris, reverse=True)     
         col = 0    
-        for item in self.not_poss:
-            random.shuffle(item.pos_variants)
-                                
-            for x in item.pos_variants:
-                if is_possible(x, item, self.hash_row, self.hash_column, self.hash_matrix):
-                    item.data = x                
-                    change_dependents(item, x, self.hash_row, self.heur_row, self.hash_column, self.heur_column, self.hash_matrix, self.heur_matrix)
+        for n in self.not_poss:
+            random.shuffle(n.pos_variants)                                
+            for x in n.pos_variants:
+                if is_possible(x, n, self.hash_row, self.hash_column, self.hash_matrix):
+                    n.data = x                
+                    change_dependents(n, x, self.hash_row, self.heur_row, self.hash_column, self.heur_column, self.hash_matrix, self.heur_matrix)
                     col += 1            
-                              
-        for item in self.not_poss:
-            if item.data == 0: return False        
         
-        return True      
+        for n in self.not_poss:
+            if n.data == 0: return False        
+         
+        return True
     
 #calculating heuristic value for each cell
     def set_heuris(self):
@@ -160,22 +157,12 @@ def change_dependents(node, x, ha_row, he_row, ha_col, he_col, ha_matr, he_matr)
                                      
     he_matr[node.index_matr] = he_matr[node.index_matr] + 1
 
-def del_x_from_pos_variants(x, n, not_poss):
-    arr_colleg = [a for a in not_poss if a.index_matr == x or a.index_row == x or a.index_col == x]
+def del_x_from_pos_variants(x, n, arr):
+    arr_colleg = [a for a in arr if a.index_matr == n.index_matr or a.index_row == n.index_row or a.index_col == n.index_col]
     for colleg in arr_colleg:
         if colleg == n: continue
-        if check_index(x, colleg.pos_variants):
-            colleg.pos_variants.remove(x) 
-                   
-def check_index(i, arr):
-    
-    indx = -1
-    try:
-        indx = arr.index(i)
-    except ValueError:
-        indx = -1
-        
-    return False if indx == -1 else True    
+        if x in colleg.pos_variants:
+            colleg.pos_variants.remove(x)   
 
 def check_obj_in_arr(i, arr):
     result = [a for a in arr if a.data == i]
@@ -188,7 +175,7 @@ def is_possible(x, n, h_row, h_col, h_matr):
     rowArr = h_row[n.index_row]
     matrArr = h_matr[n.index_matr]
     
-    if check_index(x, colArr) or check_index(x, rowArr) or check_obj_in_arr(x, matrArr):
+    if (x in colArr) or (x in rowArr) or check_obj_in_arr(x, matrArr):
         return False
     else:
         return True 

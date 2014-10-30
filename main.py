@@ -8,7 +8,8 @@ hash_matrix = {}
 heur_row = {}
 heur_column = {}
 heur_matrix = {}
-not_poss = [] 
+not_poss = []
+solut = [] 
  
 #Download data from a file 
 def separate_row(row, index_row):
@@ -65,7 +66,7 @@ def save_data(path_file, solution):
             csv_writer.writerow(newStr)
 
 #setting number of column for each cell, creating matrices 3*3 and 
-#calculating heuristic value for colums and matrices  
+#calculating heuristic value for columns and matrices  
 def set_columns():    
     
     matr_index = 0
@@ -103,9 +104,11 @@ def resolving():
     set_heuris()   
     
     not_poss.sort(cmp=None, key=lambda Node: Node.heuris, reverse=True)
-    return start_search(True)
+    result = start_search(True)     
+    return data_csv if result == None else result 
 
 def start_search(reverse):
+    
     for item in not_poss:        
         random.shuffle(item.pos_variants)        
         for x in item.pos_variants:

@@ -15,7 +15,7 @@ def download_data():
     csv_path = tbPath.get()
     
     clear_solution = Label(root, textvariable='')
-    clear_solution.place(x=420,y=80,width=300, height = 290)
+    clear_solution.place(x=420,y=80,width=300, height = 300)
     
     clear_button = Label(root, textvariable='')
     clear_button.place(x=330,y=200, width = 80, height = 100)
@@ -28,11 +28,11 @@ def download_data():
     
     if result and len(main.data_csv) != 0:
         
-        draw_board(50, 80, main.data_csv)
+        draw_board(50, 110, main.data_csv)
     
         #add button for starting resolving
         btResolve = Button(root, text ='Resolve', command = start_resolving, height=1, width=80)
-        btResolve.place(x=330,y=160, width = 80) 
+        btResolve.place(x=330,y=200, width = 80) 
     else:
         tkMessageBox.showinfo('Error.','Could not load data.')       
 
@@ -43,16 +43,16 @@ def save_data():
         tkMessageBox.showinfo('Info.','Saving was success.') 
 
 def start_resolving():
-    start = time.time()    
+    start = time.time()         
     main.solut = list(main.resolving())
     end = time.time()
     msecs = (end - start) * 1000
     timer_data.set('time: '+ str(msecs) + ' ms')
     if len(main.solut) > 0:
-        draw_board(420, 80, main.solut)
+        draw_board(420, 110, main.solut)
         #add button for save result
         btSave = Button(root, text ='Save', command = save_data, height=1, width=80);
-        btSave.place(x=330,y=200, width = 80)       
+        btSave.place(x=330,y=240, width = 80)       
 
 def draw_board(x_start, y_start, data_csv):
     x = x_start
@@ -72,7 +72,16 @@ def draw_board(x_start, y_start, data_csv):
             cell.place(x = x,y = y, width = 30, height = 30)
             x += 30
         y += 30
-                             
+
+def validate(self, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
+        if text in '0123456789.':
+            try:
+                float(value_if_allowed)
+                return True
+            except ValueError:
+                return False
+        else:
+            return False                             
 
 root = Tk()
 
@@ -89,10 +98,20 @@ lbParam.place(x=10,y=30,width=120)
 
 #add a text box for path 
 tbPath = Entry(root, bd =5, state = DISABLED)
-#tbPath.configure(state = 'disabled')
 tbPath.pack(side = LEFT)
 tbPath.place(x=130,y=30,width=300)
 
+#add label for operation time
+operatTime = StringVar()
+lbOperTime = Label(root, textvariable=operatTime)
+operatTime.set("Operation time (minute):")
+lbOperTime.pack(side=LEFT)
+lbOperTime.place(x=10,y=70,width=170)
+
+#add a text box for operation time 
+tbOperTime = Entry(root, bd =5)
+tbOperTime.pack(side = LEFT)
+tbOperTime.place(x=183,y=70,width=100)
 
 #add button for choosing path
 btChoose = Button(root, text ='...', command = choosing_file, height=1, width=25);
@@ -106,7 +125,7 @@ btDownload.place(x=465,y=28, width = 80)
 timer_data = StringVar()
 lbTimer = Label(root, textvariable=timer_data)
 lbTimer.pack(side=LEFT)
-lbTimer.place(x=260,y=360,width=200)
+lbTimer.place(x=260,y=390,width=200)
 
 root.mainloop()
 
